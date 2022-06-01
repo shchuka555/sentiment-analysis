@@ -20,57 +20,54 @@
 
 ## Overview 
 
-In this project, I analysed and trained twitter airline sentiment dataset which contains roughly 1.5k rows. 
-There are 3 sentiments(negative,neutral,postiive) classes and implimented both multinomianl and binally logistic regression to classify this.
-In order to apply the machine learning algorithm, tokenized text data and then applied Tf-idf to transofrom the tokens into numbers in matrices.
+In this project, I analyzed and trained the Twitter airline sentiment dataset, which contains roughly 1.5k rows. 
+There are three sentiments (negative, neutral, and positive) classes and implemented both multinomial and binary logistic regression to classify sentiments. To apply the machine learning algorithm, tokenized text data and then used Tf-IDF to transform the tokens into numbers in matrices.
 
-After the training, analized results and hypothetized potenital solutions to the weakness of Tf-idf which found through analysis.
-
+After the training, analyzed results and hypothesized potential solutions to the weakness of Tf-IDF which was found through analysis.
 
 ## Motivation
 
-- Explore the text dataset 
-- Apply data science to real word data
-- Implement Tf-idf from scratch(no sklearn) 
-- Compare the performance of multinomial logtistic regression with binally logistic regression
+- Explore the text dataset.
+- Apply data science to real world data.
+- Implement Tf-IDF from scratch (no sklearn).
+- Compare the performance of multinomial logistic regression with binary logistic regression.
 
 
 ## File_Introduction
 
 - [Sentiment_Analysis.ipynb](https://github.com/shchuka555/sentiment-analysis/blob/main/Sentiment_Analysis.ipynb): Data Analysis done using the kaggle dataset<br>
-- [Tweets.csv](https://github.com/shchuka555/sentiment-analysis/blob/main/Tweets.csv): Tweeter-arline-sentiment dataset which obtained in February 2015 through skrapiTechnical Aspect
-
+- [Tweets.csv](https://github.com/shchuka555/sentiment-analysis/blob/main/Tweets.csv): kaggle Tweeter-arline-sentiment dataset which obtained in February 2015
 
 ## Technical_Aspect
 
-- ### Step1: Use top 2000 frequently appeard words in training dataset to make Tf-idf
+- ### Step1: Use the top 2000 frequently appeared words in training dataset to make Tf-idf.
 
     Since there are roughly unique 15k words and punctuations in the training dataset, the 
-    computational cost of the traning will be larger if we make Tf-idf for all unique words. 
-    Thus, decided to use top 2000 frequent word.
+    computational cost of the training will be larger if we make Tf-IDF for all unique words. 
+    Thus, decided to use the top 2000 frequent words.
    
 - ### Step2: Stopwords: removing some of the words from counting
   
-  ntlk library has own sets of stopwords but choose not to use it because the sentiment analysis about tweets.
-  Unlike to natural languahe processing analysis like classifying category of news articles, the classification process does not 
-  depend on specific terminologies. Rather, we want to keep ordinary expression like "good" and "bad".
+  ntlk library has its own set of stopwords, but I choose not to use it because of the sentiment analysis about tweets.
+  Unlike natural language processing analysis, like classifying the category of news articles, the classification process does not 
+  depend on specific terminologies. Instead, we want to keep ordinary expressions like "good" and "bad."
   
-  However, still tt will be better to remove some words and punctuations which has almsot 0 correlation with sentiment of tweets.
-  I created my own set of stopwrods which are 
+  However, it will still be better to remove some words and punctuations that have almost 0 correlation with the sentiment of tweets.
+  I created my own set of stopwords which are 
     - [;],[I], [.], [,],[&],[:],[#],[...],['']
-    - [@] and name of airlines which contain in all tweets.
+    - [@] and names of airlines contains in all tweets.
   
   **Reasons**: 
   Keeping the airline names will result in lower classification accuracy.
   The plots in [Dataset_Analysis](#Dataset_Analysis) show majority of tweets in the dataset are classified as negative.
-  Therefore, the algorithm will learn them as negative words despite airline names have almost 0 correlation with sentiment of the tweet.
+  Therefore, the algorithm will learn them as negative words despite airline names having almost 0 correlation with the tweet's sentiment.
   
   
   **Non Stopwords**: 
-  On the other hand I kept some punctuations which often used with strong emotion.
-  For example [?] and [!] 
+  On the other hand, I kept some punctuation often used with strong emotion.
+  For example [?] and [!].
    
-  code:
+  **code:**
  
   ```python 
   ### function which returns top 2000 frequent words and it's counts in the train set.
@@ -96,12 +93,12 @@ After the training, analized results and hypothetized potenital solutions to the
   ```
    
 
-- ### Step3: Appying Tf-idf
-  
-  I implemented standard Tf and smooth idf without relying on sklearn.
-    - smooth idf prevents division of 0 even if a word in a testing dataset does not appear in top 2000 frequent word.
-  
-  **code:••
+- ### Step3: Appying Tf-IDF
+- 
+  I implemented standard Tf and smooth IDF without relying on sklearn.
+    - smooth IDF prevents the division of 0 when a word in a testing dataset does not appear in the top 2000 frequent words.
+ 
+  **code:**
   
   ```python
     #### self made Tf_idf with smooth idf 
@@ -128,10 +125,10 @@ After the training, analized results and hypothetized potenital solutions to the
   
 - ### Step4: Implement Logsitic regression
   
-  Applied logstic regresson because I want to compare performace of the multionminal and bianlly classificaiton.
-  Set max iteration as 500 to let algorithm finds coefficients such that maximize classification accuracy.
+  Applied logistic regression because I wanted to compare the multinomial and binary classification performance.
+  Set max iteration as 500 to let the algorithm find coefficients that maximize classification accuracy.
   
-  **code:••
+  **code:**
   
   ```python
   ### apply LogisticRegression with 500 iteration
@@ -156,33 +153,33 @@ To learn more about the dataset, I grouped the sentiments by airlines.
 ![https://github.com/shchuka555/sentiment-analysis/blob/main/samples/newplot-4.png](https://github.com/shchuka555/sentiment-analysis/blob/main/samples/newplot-4.png)
 
 
-This plot tells few thiings about sentiment and arlines.
+This plot tells a few things about sentiment and airlines.
 
-- negative review is dominant sentiment among all airlines in the dataset.
-- United, US airline, American have many bad reviews relative to other airlines.
+- Negative review is a dominant sentiment among all airlines in the dataset.
+- United, US Airlines and American have many bad reviews relative to other airlines.
 
-## Multinominal_Logistic_Regression
+## Multinomial_Logistic_Regression
 
 
 ![https://github.com/shchuka555/sentiment-analysis/blob/main/samples/output.png](https://github.com/shchuka555/sentiment-analysis/blob/main/samples/output.png)
 
-- Multinominal logistic regression correctly classified **92.5%** of negative tweets. 
-- This algorithm poorly perform to classify Neutral and Positive classes.
-  - **25.4%** of neural tweets classifed as negaitve 
-  - **12.8%** of positive tweets classifed as negative
+- Multinomial logistic regression correctly classified **92.5%** of negative tweets.
+- This algorithm poorly performs in classifying neutral and positive classes.
+  - **25.4%** of neural tweets classified as negative.
+  - **12.8%** of positive tweets classified as negative.
 
-## Binally_Logistic_Regression
+## Binary_Logistic_Regression
 
 ![https://github.com/shchuka555/sentiment-analysis/blob/main/samples/newplot-5.png](https://github.com/shchuka555/sentiment-analysis/blob/main/samples/newplot-5.png)
 
-- Binally logistic regression improved overall accuracy compared wtih multinominal case 
-- There are rouhgly  **10%** of improvement in both training and testing accuracy
+- Binary logistic regression improved overall accuracy compared with the multinomial case. 
+- There are roughly **10%** of improvements in both training and testing accuracy.
 
 
-![https://github.com/shchuka555/sentiment-analysis/blob/main/samples/output2.png](https://github.com/shchuka555/sentiment-analysis/blob/main/samples/output2.png)
+![https://github.com/shchuka555/sentiment-analysis/blob/main/samples/plot.png](https://github.com/shchuka555/sentiment-analysis/blob/main/samples/plot.png)
 
-- correctly classified **97.7%** of negative tweets. 
-- However, still **14.3%** of positive tweets classifed as negative
+- Correctly classified **97.7%** of negative tweets.
+- However, still **14.3%** of positive tweets classified as negative.
 
 
 ## Analysis_of_Regression_Coefficients
@@ -195,56 +192,52 @@ This plot tells few thiings about sentiment and arlines.
 
 
 
-
 ## Analysis_of_Misclassified_Tweets
 
-  - ### Positive tweet which predicted as negative
+  - ### A positive tweet which predicted to negative
     
     #### '@ united all flights cancelled flighted: (trip refunded without difficulty, staff extremely helpful, no complaints! way to handle bad weather!'
 
-    Obtained above tweet by sorting postive tweet by predicted probability that belonges to negative class.
-    (the tweet predicted as 99.8% negative tweet)
-    The tweet is clearly postive because the user complemented how it was smooth to get refund from airline and staff was helpful.
-    However the prediction is negative, the following plot explans the reason why it predicted as negative.
+    Obtained the above tweet by sorting positive tweets by the predicted probability belonging to the negative class.
+    (The binary regression prediction is 99.8% negative)
+    The tweet is clearly positive because the user complemented how it was smooth to get a refund from the airline, and the staff was helpful.
+    However, the prediction is negative. The following plot explains the reason why it was predicted as negative.
 
     ![https://github.com/shchuka555/sentiment-analysis/blob/main/samples/newplot-9.png](https://github.com/shchuka555/sentiment-analysis/blob/main/samples/newplot-9.png)
 
     The plot shows words like "Without" and "Complained" have really negative coefficients. 
-    Despite there are many postive words in the tweet, the magitude is too small compared with negative words. 
-    Therefore such words pulled the prediction toward negative direction and the prediction is extreme.
+    Despite many positive words in the tweet, the magnitude is too small compared to negative words. 
+        Therefore such words pulled the prediction in a negative direction.
 
-  - ### Negative tweet which predicted as positive
+  - ### A negative tweet which predicted to positive
 
     #### '@ americanair thanks for info on super large passengers- the extra seat mr. big needed was the one i was sitting in already #customerservice'
   
-    Obtained above tweet by sorting negative tweet by predicted probability that belonges to positive class.
-    (This is not "most misclassifed tweet" but the tweet predicted as 99.4% positive tweet)
-    
-    The above tweet is negative but the sarcastic consisted by many posotive words.
-    
-    Therefore, algorithm predicted the tweet as positive, the following plot validate the statement
+    Obtained the above tweet by sorting negative tweets by the predicted probability that belongs to the positive class.
+    (This is not the "most misclassified tweet," but the algorithm predicted to 99.4% positive tweet)
+    The above tweet is negative, but the sarcasm consists of many positive words.
+    Therefore, the algorithm predicted the tweet as positive.
 
     ![https://github.com/shchuka555/sentiment-analysis/blob/main/samples/newplot-10.png](https://github.com/shchuka555/sentiment-analysis/blob/main/samples/newplot-10.png)
 
-
+  
 
 ## Conclusion
 
   - ## Results
-    -  binally logistic regression have lower error rate than multinomial one.
-    -  The algorithm has lower accuracy on classifying non negative tweets.
-
-  - ## Issues
-    - positve phrase can be viewed as 2 negative words 
+    -  Binary logistic regression has a lower error rate than multinomial one.
+    -  Both algorithms have lower accuracy in classifying non-negative tweets.
+    - The unigram model approach treats some positive phrases as multiple negative words.
       - example: "without complained" -> "without" + "complained"
-    - the approach with Tf-idf can misclassify sarcastic negative tweet which contains many postive words.
+    - The approach with Tf-IDF misclassified sarcastic and negative tweet, which contains many positive words.
  
-  - ## potential solutions
-    - applying bi-gram Tf-Idf instead of uni-gram
-    - the issue with sarcastic text can be hard to deal with but it might not exist in Non-English tweets sentiment analysis
+  - ## Potential solutions
+    - Applying bigram Tf-IDF instead of uni-gram.
+    - The issue with sarcastic text can be hard to deal with, but it might not exist in Non-English tweets sentiment analysis.
       - for example, sarcasm is far less common in Japanese language and culture.
 
 ## Credits
 
 Dataset from [Kaggle](https://www.kaggle.com/datasets/crowdflower/twitter-airline-sentiment):
 Udeny course [natural-language-processing-in-python](https://www.udemy.com/course/natural-language-processing-in-python/):
+
